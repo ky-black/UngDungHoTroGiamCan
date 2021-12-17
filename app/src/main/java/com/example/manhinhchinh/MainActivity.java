@@ -8,7 +8,10 @@ import android.text.Layout;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
     Animation Move_Breakfast, Move_Lunch, Move_Dinner, Move_Train,
             Back_Breakfast, Back_Lunch, Back_Dinner, Back_Train;
     boolean moveBack = false;
+
+    Button button_decr, button_incr;
+    ProgressBar progress_bar;
+    TextView text_view_progress;
+    int progress;
 
 
     @Override
@@ -40,6 +48,31 @@ public class MainActivity extends AppCompatActivity {
         Back_Lunch = AnimationUtils.loadAnimation(this, R.anim.back_lunch);
         Back_Dinner = AnimationUtils.loadAnimation(this, R.anim.back_dinner);
         Back_Train = AnimationUtils.loadAnimation(this, R.anim.back_train);
+
+        button_decr = findViewById(R.id.button_decr);
+        button_incr = findViewById(R.id.button_incr);
+        progress_bar = findViewById(R.id.progress_bar);
+        text_view_progress = findViewById(R.id.text_view_progress);
+
+        button_incr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (progress <= 100){
+                    progress += 10;
+                    updateProgressBar();
+                }
+            }
+        });
+
+        button_decr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (progress >= 0){
+                    progress -= 10;
+                    updateProgressBar();
+                }
+            }
+        });
 
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void updateProgressBar() {
+        progress_bar.setProgress(progress);
+        text_view_progress.setText(progress + "%");
+    }
+
     private void Move(){
         FrameLayout.LayoutParams paramsBreakfast = (FrameLayout.LayoutParams) fab_breakfast.getLayoutParams();
         paramsBreakfast.bottomMargin = (int) (fab_breakfast.getWidth() * 1.5);
@@ -131,5 +169,7 @@ public class MainActivity extends AppCompatActivity {
         fab_train.setLayoutParams(paramsTrain);
         fab_train.startAnimation(Back_Train);
     }
+
+
 
 }

@@ -22,6 +22,43 @@
             android:textStyle="bold"
             android:layout_marginLeft="10dp"/>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/circle"
+            android:progress="60" />
+
+        <TextView
+            android:id="@+id/text_view_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="60%"
+            android:hint="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_gravity="center"
+            android:layout_marginTop="-90dp" />
+
+        <Button
+            android:id="@+id/button_decr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-10%"
+            android:textColor="@color/black"
+            android:layout_marginTop="-75dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/button_incr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+10%"
+            android:textColor="@color/black"
+            android:layout_marginLeft="50dp"/>
+
     </LinearLayout>
 
 
