@@ -1,6 +1,9 @@
 package com.example.manhinhchinh;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +13,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton add_btn, fab_breakfast, fab_lunch, fab_dinner, fab_train;
@@ -53,6 +60,17 @@ public class MainActivity extends AppCompatActivity {
         button_incr = findViewById(R.id.button_incr);
         progress_bar = findViewById(R.id.progress_bar);
         text_view_progress = findViewById(R.id.text_view_progress);
+
+        //Main RecyclerView
+        RecyclerView rcv_main_food = findViewById(R.id.rcv_main_food);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rcv_main_food.setLayoutManager(linearLayoutManager);
+
+        FoodMainAdapter foodMainAdapter = new FoodMainAdapter(getListFood());
+        rcv_main_food.setAdapter(foodMainAdapter);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        rcv_main_food.addItemDecoration(itemDecoration);
 
         button_incr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,11 +138,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //RecyclerView Main Food
+    private List<Food> getListFood() {
+        List<Food> list = new ArrayList<>();
+
+        for (int i = 0 ; i < 5 ; i++){
+            list.add(new Food(i, "Food" + i));
+        }
+
+
+        return list;
+    }
+
     private void updateProgressBar() {
         progress_bar.setProgress(progress);
         text_view_progress.setText(progress + "%");
     }
-
+    //Move Animation Float Button
     private void Move(){
         FrameLayout.LayoutParams paramsBreakfast = (FrameLayout.LayoutParams) fab_breakfast.getLayoutParams();
         paramsBreakfast.bottomMargin = (int) (fab_breakfast.getWidth() * 1.5);
@@ -147,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         fab_train.startAnimation(Move_Train);
 
     }
-
+    //Back Animation Float Button
     private void BackAnimation(){
         FrameLayout.LayoutParams paramsBreakfast = (FrameLayout.LayoutParams) fab_breakfast.getLayoutParams();
         paramsBreakfast.bottomMargin -= (int) (fab_breakfast.getWidth() * 1.5);
