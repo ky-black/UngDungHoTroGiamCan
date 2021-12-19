@@ -10,6 +10,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,12 @@ public class BreakFast extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcv_food.setLayoutManager(linearLayoutManager);
 
-        foodAdapter = new FoodAdapter(getListFood());
+        foodAdapter = new FoodAdapter(this, getListFood());
         rcv_food.setAdapter(foodAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_food.addItemDecoration(itemDecoration);
+
     }
 
     private List<Food> getListFood() {
