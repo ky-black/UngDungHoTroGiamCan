@@ -76,7 +76,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_main_food"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="310dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
