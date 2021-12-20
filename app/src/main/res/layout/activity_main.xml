@@ -66,7 +66,7 @@
         <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Món ăn đã chọn"
+        android:text="Breakfast, lunch, dinner"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textAlignment="center"
