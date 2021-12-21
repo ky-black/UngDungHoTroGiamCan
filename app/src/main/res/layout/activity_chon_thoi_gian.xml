@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#5D00FAFA"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:text="Chọn phương pháp giảm cân"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="6dp"
+
+            android:textColor="#F30303"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical"
+        >
+
+
+        <Button
+            android:id="@+id/btn3thang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.355"
+            tools:layout_editor_absoluteX="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="Giảm cân trong 3 tháng"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            />
+
+        <Button
+            android:id="@+id/btn6thang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.435"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            tools:layout_editor_absoluteX="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="Giảm cân trong 6 tháng" />
+
+        <Button
+            android:id="@+id/btn9thang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.53"
+            tools:layout_editor_absoluteX="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="Giảm cân trong 9 tháng" />
+
+        <Button
+            android:id="@+id/btn12thang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.53"
+            tools:layout_editor_absoluteX="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="Giảm cân trong 12 tháng" />
+    </LinearLayout>
+</LinearLayout>
