@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +24,7 @@ public class BreakFast extends AppCompatActivity {
     private RecyclerView rcv_food;
     private FoodAdapter foodAdapter;
     private SearchView searchView;
+    private Button btnAnSang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +35,30 @@ public class BreakFast extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcv_food.setLayoutManager(linearLayoutManager);
 
+        btnAnSang = findViewById(R.id.btnAnSang);
+
         foodAdapter = new FoodAdapter(this, getListFood());
         rcv_food.setAdapter(foodAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_food.addItemDecoration(itemDecoration);
+//        CatchItemRecyclerView();
 
     }
+
+    private void CatchItemRecyclerView() {
+        btnAnSang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent();
+                // TODO Add extras or a data URI to this intent as appropriate.
+                resultIntent.putExtra("some_key", "String data");
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
+            }
+        });
+    }
+
 
     private List<Food> getListFood() {
         List<Food> listFood = new ArrayList<>();
@@ -69,6 +91,7 @@ public class BreakFast extends AppCompatActivity {
         return listFood;
     }
 
+    //chức năng tìm kiếm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -91,7 +114,6 @@ public class BreakFast extends AppCompatActivity {
                 return false;
             }
         });
-
         return true;
     }
 
@@ -102,6 +124,5 @@ public class BreakFast extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
-
     }
 }

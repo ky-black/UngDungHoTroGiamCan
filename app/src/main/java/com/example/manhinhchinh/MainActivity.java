@@ -7,13 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
             Back_Breakfast, Back_Lunch, Back_Dinner, Back_Train;
     boolean moveBack = false;
 
-    Button button_decr, button_incr;
+    Button button_decr, button_incr, btnAnSang;
     ProgressBar progress_bar;
     TextView text_view_progress;
     int progress;
+
+    List<Food> food = new ArrayList<Food>();
+    //chọn 1 trong 2
+//    FoodMainAdapter foodMainAdapter = null;
+    FoodAdapter foodMainAdapter = null;
+
 
 
     @Override
@@ -66,8 +70,27 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcv_main_food.setLayoutManager(linearLayoutManager);
 
-        FoodMainAdapter foodMainAdapter = new FoodMainAdapter(getListFood());
+        food = new ArrayList<Food>();
+        FoodMainAdapter foodMainAdapter = new FoodMainAdapter(food);
         rcv_main_food.setAdapter(foodMainAdapter);
+
+//        FoodAdapter foodMainAdapter = new FoodAdapter(this,list);
+//        rcv_main_food.setAdapter(foodMainAdapter);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+            String valueShowName = bundle.getString("pass_name_food", "");
+            String valueShowCalo = bundle.getString("pass_calo_food", "");
+            Toast.makeText(MainActivity.this, "Nhớ mục tiêu giảm cân nhé!" , Toast.LENGTH_SHORT).show();
+            food.add(new Food(valueShowName, valueShowCalo));
+//            foodMainAdapter.notifyDataSetChanged();
+        }
+
+
+
+
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_main_food.addItemDecoration(itemDecoration);
@@ -140,14 +163,8 @@ public class MainActivity extends AppCompatActivity {
 
     //RecyclerView Main Food
     private List<Food> getListFood() {
-        List<Food> list = new ArrayList<>();
 
-        for (int i = 0 ; i < 5 ; i++){
-            list.add(new Food(i, "Food" + i));
-        }
-
-
-        return list;
+        return food;
     }
 
     private void updateProgressBar() {

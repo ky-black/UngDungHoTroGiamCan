@@ -19,6 +19,10 @@ public class Food implements Serializable {
         this.name = name;
     }
 
+    public Food(String name, String calo) {
+        this.name = name;
+        this.calo = calo;
+    }
 
     public int getImage() {
         return image;
