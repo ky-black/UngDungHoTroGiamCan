@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,11 +50,30 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         holder.imgFood.setImageResource(food.getImage());
         holder.tvName.setText(food.getName());
         holder.tvCalo.setText(food.getCalo());
-
-        holder.layout_item_food.setOnClickListener(new View.OnClickListener() {
+        //ban goc
+//        holder.layout_item_food.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onClickGoToDetail(food);
+//            }
+//        });
+        holder.layout_food_and_calo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickGoToDetail(food);
+            }
+        });
+        holder.imgFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickGoToDetail(food);
+            }
+        });
+
+        holder.btnAnSang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickPassFood(food);
             }
         });
     }
@@ -63,6 +84,14 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         bundle.putSerializable("object_food", food);
         intent.putExtras(bundle);
         bConText.startActivity(intent);
+    }
+    private void onClickPassFood(Food food) {
+        Intent intent1 = new Intent(bConText,MainActivity.class);
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("pass_name_food", food.getName());
+        bundle1.putString("pass_calo_food", food.getCalo());
+        intent1.putExtras(bundle1);
+        bConText.startActivity(intent1);
     }
 
 
@@ -76,17 +105,21 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
 
-        private RelativeLayout layout_item_food;
+        private LinearLayout layout_item_food;
+        private LinearLayout layout_food_and_calo;
         private CircleImageView imgFood;
         private TextView tvName;
         private TextView tvCalo;
+        private Button btnAnSang;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             layout_item_food = itemView.findViewById(R.id.layout_item_food);
+            layout_food_and_calo = itemView.findViewById(R.id.layout_food_and_calo);
             imgFood = itemView.findViewById(R.id.img_food);
             tvName = itemView.findViewById(R.id.tv_name);
             tvCalo = itemView.findViewById(R.id.tv_calo);
+            btnAnSang = itemView.findViewById(R.id.btnAnSang);
         }
     }
 

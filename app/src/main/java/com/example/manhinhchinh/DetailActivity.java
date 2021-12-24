@@ -13,11 +13,13 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         TextView tv_food_detail = findViewById(R.id.tv_food_detail);
+        TextView tv_food_detail_calo = findViewById(R.id.tv_food_detail_calo);
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
             return;
         }
         Food food = (Food) bundle.get("object_food");
         tv_food_detail.setText(food.getName());
+        tv_food_detail_calo.setText(food.getCalo());
     }
 }

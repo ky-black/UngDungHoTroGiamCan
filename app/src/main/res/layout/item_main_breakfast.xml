@@ -24,6 +24,7 @@
             android:background="@android:color/holo_red_dark"
             android:text="Delete"/>
 
+
     </LinearLayout>
     <!-- Your main layout here -->
     <LinearLayout
@@ -37,8 +38,16 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:padding="20dp"
+            android:padding="5dp"
             android:text="Cafe Phin"/>
+        <TextView
+            android:id="@+id/tv_calo_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:padding="5dp"
+            android:text="50 calo"/>
     </LinearLayout>
 
 

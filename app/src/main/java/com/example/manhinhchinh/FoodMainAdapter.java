@@ -42,6 +42,7 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
 
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(food.getId()));
         holder.tvFoodDelete.setText(food.getName());
+        holder.tv_calo_delete.setText(food.getCalo());
         holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +64,7 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
 
         private SwipeRevealLayout swipeRevealLayout;
         private LinearLayout layoutDelete;
-        private TextView tvFoodDelete;
+        private TextView tvFoodDelete, tv_calo_delete;
 
 
         public FoodMainViewHolder(@NonNull View itemView) {
@@ -72,6 +73,7 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
             swipeRevealLayout = itemView.findViewById(R.id.swipeRevealLayout);
             layoutDelete = itemView.findViewById(R.id.layout_item_delete);
             tvFoodDelete = itemView.findViewById(R.id.tv_food_delete);
+            tv_calo_delete = itemView.findViewById(R.id.tv_calo_delete);
         }
     }
 }
