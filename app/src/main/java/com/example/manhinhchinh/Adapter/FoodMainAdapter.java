@@ -1,29 +1,35 @@
-package com.example.manhinhchinh;
+package com.example.manhinhchinh.Adapter;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.example.manhinhchinh.Module.FoodModule;
+import com.example.manhinhchinh.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMainViewHolder>{
 
-    private List<Food> mListMainFood;
+    private List<FoodModule> mListMainFood;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    Context mContext;
 
-    public FoodMainAdapter(List<Food> mListMainFood) {
+    public FoodMainAdapter(Context mContext, List<FoodModule> mListMainFood) {
         this.mListMainFood = mListMainFood;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -35,13 +41,15 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
 
     @Override
     public void onBindViewHolder(@NonNull FoodMainViewHolder holder, int position) {
-        Food food = mListMainFood.get(position);
+        FoodModule food = mListMainFood.get(position);
         if (food == null){
             return;
         }
 
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(food.getId()));
-        holder.tvFoodDelete.setText(food.getName());
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(food.getID()));
+        holder.tvFoodDelete.setText(food.getFoodName());
+        holder.tv_calo_delete.setText(food.getCalories());
+        Picasso.with(mContext);
         holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +58,7 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -63,7 +72,9 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
 
         private SwipeRevealLayout swipeRevealLayout;
         private LinearLayout layoutDelete;
-        private TextView tvFoodDelete;
+        private TextView tvFoodDelete, tv_calo_delete;
+        private Button btnAnSang;
+        private CircleImageView img_food;
 
 
         public FoodMainViewHolder(@NonNull View itemView) {
@@ -72,6 +83,9 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
             swipeRevealLayout = itemView.findViewById(R.id.swipeRevealLayout);
             layoutDelete = itemView.findViewById(R.id.layout_item_delete);
             tvFoodDelete = itemView.findViewById(R.id.tv_food_delete);
+            tv_calo_delete = itemView.findViewById(R.id.tv_calo_delete);
+            btnAnSang = itemView.findViewById(R.id.btnAnSang);
+            img_food = itemView.findViewById(R.id.img_food);
         }
     }
 }

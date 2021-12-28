@@ -1,4 +1,6 @@
-package com.example.manhinhchinh;
+package com.example.manhinhchinh.Activity;
+
+import static java.lang.Integer.parseInt;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -7,17 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.manhinhchinh.Adapter.FoodAdapter;
+import com.example.manhinhchinh.Adapter.FoodMainAdapter;
+import com.example.manhinhchinh.Module.FoodModule;
+import com.example.manhinhchinh.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -29,17 +33,25 @@ public class MainActivity extends AppCompatActivity {
             Back_Breakfast, Back_Lunch, Back_Dinner, Back_Train;
     boolean moveBack = false;
 
-    Button button_decr, button_incr;
+    Button button_decr, button_incr, btnAnSang;
     ProgressBar progress_bar;
     TextView text_view_progress;
-    int progress;
+    int ketQua;
 
+    int progress = 0;
+
+
+    public static List<FoodModule> food = new ArrayList<FoodModule>();
+    //chọn 1 trong 2
+//    FoodMainAdapter foodMainAdapter = null;
+    FoodAdapter foodMainAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Ánh Xạ
         add_btn = findViewById(R.id.add_btn);
         fab_breakfast = findViewById(R.id.fab_breakfast);
         fab_lunch = findViewById(R.id.fab_lunch);
@@ -66,32 +78,46 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcv_main_food.setLayoutManager(linearLayoutManager);
 
-        FoodMainAdapter foodMainAdapter = new FoodMainAdapter(getListFood());
+
+        FoodMainAdapter foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food);
         rcv_main_food.setAdapter(foodMainAdapter);
+        //updateProgressBar();
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String valueShow = bundle.getString("pass_calo_food", "");
+            progress += Integer.parseInt(valueShow);
+            Toast.makeText(this, "Show value: " + progress, Toast.LENGTH_SHORT).show();
+        }
+
+        for (int i=0; i< progress; i++){
+            ketQua += Integer.parseInt(MainActivity.food.get(i).getCalories().substring(0, 3));
+        }
+        progress_bar.setProgress(ketQua);
+        text_view_progress.setText(String.valueOf(ketQua));
+        foodMainAdapter.notifyDataSetChanged();
+
+
+//        FoodAdapter foodMainAdapter = new FoodAdapter(this,list);
+//        rcv_main_food.setAdapter(foodMainAdapter);
+
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_main_food.addItemDecoration(itemDecoration);
 
-        button_incr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (progress <= 100){
-                    progress += 10;
-                    updateProgressBar();
-                }
-            }
-        });
 
-        button_decr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (progress >= 0){
-                    progress -= 10;
-                    updateProgressBar();
-                }
-            }
-        });
+//        button_decr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (progress >= 0){
+//                    progress -= 10;
+//                    updateProgressBar();
+//                }
+//            }
+//        });
 
+        //Float Button
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,21 +164,51 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //RecyclerView Main Food
-    private List<Food> getListFood() {
-        List<Food> list = new ArrayList<>();
-
-        for (int i = 0 ; i < 5 ; i++){
-            list.add(new Food(i, "Food" + i));
-        }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        updateProgressBar();
+//    }
 
 
-        return list;
+    //    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        btnAnSang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (progress <= 100){
+//                    progress += 10;
+//                    updateProgressBar();
+//                }
+//            }
+//        });
+//    }
+
+
+
+    private int sumCalo(){
+        int sum = 0;
+        for(int i = 0; i < food.size(); i++)
+            sum += parseInt(food.get(i).getCalories());
+        return sum;
     }
 
     private void updateProgressBar() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String valueShow = bundle.getString("pass_calo_food", "");
+//            progress = Integer.parseInt(valueShow.substring(0, 3));
+            progress = Integer.parseInt(valueShow);
+            Toast.makeText(this, "Show value: " + progress, Toast.LENGTH_SHORT).show();
+
+        }
+
         progress_bar.setProgress(progress);
-        text_view_progress.setText(progress + "%");
+        text_view_progress.setText(String.valueOf(progress));
+//        progress_bar.setProgress(progress);
+//        text_view_progress.setText(progress);
     }
     //Move Animation Float Button
     private void Move(){
