@@ -1,9 +1,12 @@
-package com.example.manhinhchinh;
+package com.example.manhinhchinh.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.manhinhchinh.Module.FoodModule;
+import com.example.manhinhchinh.R;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -18,8 +21,8 @@ public class DetailActivity extends AppCompatActivity {
         if (bundle == null){
             return;
         }
-        Food food = (Food) bundle.get("object_food");
-        tv_food_detail.setText(food.getName());
-        tv_food_detail_calo.setText(food.getCalo());
+        FoodModule food = (FoodModule) bundle.get("object_food");
+        tv_food_detail.setText(food.getFoodName());
+        tv_food_detail_calo.setText(food.getCalories());
     }
 }

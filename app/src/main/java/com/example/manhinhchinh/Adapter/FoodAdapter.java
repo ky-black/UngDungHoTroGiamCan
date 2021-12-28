@@ -1,4 +1,4 @@
-package com.example.manhinhchinh;
+package com.example.manhinhchinh.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +10,17 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.manhinhchinh.Activity.BreakFast;
+import com.example.manhinhchinh.Activity.MainActivity;
+import com.example.manhinhchinh.Activity.DetailActivity;
+import com.example.manhinhchinh.Module.FoodModule;
+import com.example.manhinhchinh.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +30,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolder> implements Filterable {
 
     private Context bConText;
-    private List<Food> mListFood;
-    private List<Food> mListFoodOld;
+    private List<FoodModule> mListFood;
+    private List<FoodModule> mListFoodOld;
 
+    int ketQua = 0;
+    int dem = 0;
 
-    public FoodAdapter(Context bConText, List<Food> mListFood) {
+    public FoodAdapter(Context bConText, List<FoodModule> mListFood) {
         this.bConText = bConText;
         this.mListFood = mListFood;
         this.mListFoodOld = mListFood;
@@ -43,13 +51,13 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        Food food = mListFood.get(position);
+        FoodModule food = mListFood.get(position);
         if (food == null){
             return;
         }
-        holder.imgFood.setImageResource(food.getImage());
-        holder.tvName.setText(food.getName());
-        holder.tvCalo.setText(food.getCalo());
+        Picasso.with(bConText).load(food.getPicture()).into(holder.imgFood);
+        holder.tvName.setText(food.getFoodName());
+        holder.tvCalo.setText(food.getCalories());
         //ban goc
 //        holder.layout_item_food.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -73,23 +81,40 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         holder.btnAnSang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickPassFood(food);
+                MainActivity.food.add(food);
+                dem++;
+                Intent intent = new Intent(bConText, MainActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("pass_calo_food", String.valueOf(ketQua));
+                bundle1.putString("pass_calo_food", String.valueOf(dem));
+                intent.putExtras(bundle1);
+                bConText.startActivity(intent);
+
+//                onClickPassFood(food);
             }
         });
     }
 
-    private void onClickGoToDetail(Food food) {
-        Intent intent = new Intent(bConText,DetailActivity.class);
+    public static void processCar(ArrayList<FoodModule> foods){
+        int totalAmount=0;
+        for (int i=0; i<foods.size(); i++){
+            totalAmount = Integer.parseInt(foods.get(i).getCalories());
+        }
+    }
+
+    private void onClickGoToDetail(FoodModule food) {
+        Intent intent = new Intent(bConText, DetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("object_food", food);
         intent.putExtras(bundle);
         bConText.startActivity(intent);
     }
-    private void onClickPassFood(Food food) {
+    public void onClickPassFood(FoodModule food) {
+
         Intent intent1 = new Intent(bConText,MainActivity.class);
         Bundle bundle1 = new Bundle();
-        bundle1.putString("pass_name_food", food.getName());
-        bundle1.putString("pass_calo_food", food.getCalo());
+//        bundle1.putString("pass_name_food", food.getName());
+        bundle1.putString("pass_calo_food", food.getCalories());
         intent1.putExtras(bundle1);
         bConText.startActivity(intent1);
     }
@@ -132,9 +157,9 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
                 if (strSearch.isEmpty()){
                     mListFood = mListFoodOld;
                 } else {
-                    List<Food> list = new ArrayList<>();
-                    for (Food food : mListFoodOld){
-                        if (food.getName().toLowerCase().contains(strSearch.toLowerCase())){
+                    List<FoodModule> list = new ArrayList<>();
+                    for (FoodModule food : mListFoodOld){
+                        if (food.getFoodName().toLowerCase().contains(strSearch.toLowerCase())){
                             list.add(food);
                         }
                     }
@@ -149,7 +174,7 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                mListFood = (List<Food>) results.values;
+                mListFood = (List<FoodModule>) results.values;
                 notifyDataSetChanged();
             }
         };

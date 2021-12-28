@@ -1,4 +1,4 @@
-package com.example.manhinhchinh;
+package com.example.manhinhchinh.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -14,7 +14,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.manhinhchinh.Adapter.FoodAdapter;
+import com.example.manhinhchinh.Module.FoodModule;
+import com.example.manhinhchinh.R;
+import com.example.manhinhchinh.ultil.MySingleton;
+import com.example.manhinhchinh.ultil.Server;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +42,7 @@ public class BreakFast extends AppCompatActivity {
     private FoodAdapter foodAdapter;
     private SearchView searchView;
     private Button btnAnSang;
+    private List<FoodModule> foodModules = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +55,49 @@ public class BreakFast extends AppCompatActivity {
 
         btnAnSang = findViewById(R.id.btnAnSang);
 
-        foodAdapter = new FoodAdapter(this, getListFood());
+        getFoodData();
+
+        foodAdapter = new FoodAdapter(this, foodModules);
         rcv_food.setAdapter(foodAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_food.addItemDecoration(itemDecoration);
-//        CatchItemRecyclerView();
+    }
 
+    private void getFoodData() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest request = new JsonArrayRequest(Server.urlGetFood, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+//                Toast.makeText(getApplicationContext(),""+response,Toast.LENGTH_LONG).show();
+                if (response != null){
+                    for (int i = 0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+
+                            FoodModule tmp = new FoodModule(jsonObject.getString("Description"),
+                                    jsonObject.getString("Picture"),
+                                    jsonObject.getString("ID"),
+                                    jsonObject.getString("Unit"),
+                                    jsonObject.getString("TypeFood"),
+                                    jsonObject.getString("Calories"),
+                                    jsonObject.getString("FoodName"));
+                            foodModules.add(tmp);
+                            foodAdapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Loi gi "+error,Toast.LENGTH_LONG).show();
+            }
+        });
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     private void CatchItemRecyclerView() {
@@ -59,37 +113,6 @@ public class BreakFast extends AppCompatActivity {
         });
     }
 
-
-    private List<Food> getListFood() {
-        List<Food> listFood = new ArrayList<>();
-
-        listFood.add(new Food(R.drawable.cafe_sua, "Cafe sữa", "300 calo"));
-        listFood.add(new Food(R.drawable.cafe_den, "Cafe đen", "150 calo"));
-        listFood.add(new Food(R.drawable.cafe_den, "Cafe đen", "150 calo"));
-        listFood.add(new Food(R.drawable.cafe_den, "Cafe đen", "150 calo"));
-        listFood.add(new Food(R.drawable.com_suon, "Sà Bì Chưởng", "700 calo"));
-        listFood.add(new Food(R.drawable.cafe_den, "Cafe đen", "150 calo"));
-        listFood.add(new Food(R.drawable.capuchino, "Cappuccino", "250 calo"));
-        listFood.add(new Food(R.drawable.cafe_sua, "Cafe sữa", "300 calo"));
-        listFood.add(new Food(R.drawable.cafe_phin, "Cafe pha phin", "200 calo"));
-        listFood.add(new Food(R.drawable.cafe_phin, "Cafe pha phin", "200 calo"));
-        listFood.add(new Food(R.drawable.capuchino, "Cappuccino", "250 calo"));
-        listFood.add(new Food(R.drawable.cafe_phin, "Cafe pha phin", "200 calo"));
-        listFood.add(new Food(R.drawable.cafe_den, "Cafe đen", "150 calo"));
-        listFood.add(new Food(R.drawable.cafe_sua, "Cafe sữa", "300 calo"));
-        listFood.add(new Food(R.drawable.com_suon, "Sà Bì Chưởng", "700 calo"));
-        listFood.add(new Food(R.drawable.cafe_sua, "Cafe sữa", "300 calo"));
-        listFood.add(new Food(R.drawable.cafe_phin, "Cafe pha phin", "200 calo"));
-        listFood.add(new Food(R.drawable.cafe_phin, "Cafe pha phin", "200 calo"));
-        listFood.add(new Food(R.drawable.com_suon, "Sà Bì Chưởng", "700 calo"));
-        listFood.add(new Food(R.drawable.cafe_phin, "Cafe pha phin", "200 calo"));
-        listFood.add(new Food(R.drawable.capuchino, "Cappuccino", "250 calo"));
-        listFood.add(new Food(R.drawable.cafe_sua, "Cafe sữa", "300 calo"));
-        listFood.add(new Food(R.drawable.capuchino, "Cappuccino", "250 calo"));
-        listFood.add(new Food(R.drawable.cafe_sua, "Cafe sữa", "300 calo"));
-
-        return listFood;
-    }
 
     //chức năng tìm kiếm
     @Override
