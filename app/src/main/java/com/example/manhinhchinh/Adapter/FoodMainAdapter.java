@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.example.manhinhchinh.Activity.MainActivity;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
 import com.squareup.picasso.Picasso;
@@ -23,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMainViewHolder>{
 
-    private List<FoodModule> mListMainFood;
+    public List<FoodModule> mListMainFood;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
     Context mContext;
 
@@ -49,7 +50,7 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(food.getID()));
         holder.tvFoodDelete.setText(food.getFoodName());
         holder.tv_calo_delete.setText(food.getCalories());
-        Picasso.with(mContext);
+        Picasso.with(mContext).load(food.getPicture()).into(holder.img_food);
         holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

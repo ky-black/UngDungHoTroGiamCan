@@ -18,8 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.manhinhchinh.Adapter.ExerciseAdapter;
 import com.example.manhinhchinh.Adapter.FoodAdapter;
 import com.example.manhinhchinh.Adapter.FoodMainAdapter;
+import com.example.manhinhchinh.Module.ExerciseModule;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,12 +38,11 @@ public class MainActivity extends AppCompatActivity {
     Button button_decr, button_incr, btnAnSang;
     ProgressBar progress_bar;
     TextView text_view_progress;
-    int ketQua;
 
-    int progress = 0;
 
 
     public static List<FoodModule> food = new ArrayList<FoodModule>();
+    public static List<ExerciseModule> exerciseModules = new ArrayList<ExerciseModule>();
     //chọn 1 trong 2
 //    FoodMainAdapter foodMainAdapter = null;
     FoodAdapter foodMainAdapter = null;
@@ -68,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         Back_Dinner = AnimationUtils.loadAnimation(this, R.anim.back_dinner);
         Back_Train = AnimationUtils.loadAnimation(this, R.anim.back_train);
 
-        button_decr = findViewById(R.id.button_decr);
-        button_incr = findViewById(R.id.button_incr);
         progress_bar = findViewById(R.id.progress_bar);
         text_view_progress = findViewById(R.id.text_view_progress);
 
@@ -83,39 +82,15 @@ public class MainActivity extends AppCompatActivity {
         rcv_main_food.setAdapter(foodMainAdapter);
         //updateProgressBar();
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            String valueShow = bundle.getString("pass_calo_food", "");
-            progress += Integer.parseInt(valueShow);
-            Toast.makeText(this, "Show value: " + progress, Toast.LENGTH_SHORT).show();
-        }
-
-        for (int i=0; i< progress; i++){
-            ketQua += Integer.parseInt(MainActivity.food.get(i).getCalories().substring(0, 3));
-        }
-        progress_bar.setProgress(ketQua);
-        text_view_progress.setText(String.valueOf(ketQua));
-        foodMainAdapter.notifyDataSetChanged();
+        putCaloFromList();
 
 
-//        FoodAdapter foodMainAdapter = new FoodAdapter(this,list);
-//        rcv_main_food.setAdapter(foodMainAdapter);
 
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_main_food.addItemDecoration(itemDecoration);
 
 
-//        button_decr.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (progress >= 0){
-//                    progress -= 10;
-//                    updateProgressBar();
-//                }
-//            }
-//        });
 
         //Float Button
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Sáng", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, BreakFast.class);
+                intent.putExtra("type_food", "Bữa sáng");
                 startActivity(intent);
             }
         });
@@ -145,13 +121,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Trưa", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, BreakFast.class);
+                intent.putExtra("type_food", "Bữa trưa");
+                startActivity(intent);
             }
         });
 
         fab_dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Chiều", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Trưa", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, BreakFast.class);
+                intent.putExtra("type_food", "Bữa tối");
+                startActivity(intent);
             }
         });
 
@@ -159,31 +141,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Tập Luyện", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, Exercise.class);
+                startActivity(intent);
             }
         });
 
     }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        updateProgressBar();
-//    }
+    public void putCaloFromList() {
+        int sumCalo = 0;
+        for (int i=0; i< food.size(); i++){
+            sumCalo += Integer.parseInt(food.get(i).getCalories());
+        }
+        progress_bar.setProgress(sumCalo);
+        text_view_progress.setText(sumCalo + "/2000kcal");
+    }
 
 
-    //    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        btnAnSang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (progress <= 100){
-//                    progress += 10;
-//                    updateProgressBar();
-//                }
-//            }
-//        });
-//    }
 
 
 
@@ -194,22 +168,7 @@ public class MainActivity extends AppCompatActivity {
         return sum;
     }
 
-    private void updateProgressBar() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            String valueShow = bundle.getString("pass_calo_food", "");
-//            progress = Integer.parseInt(valueShow.substring(0, 3));
-            progress = Integer.parseInt(valueShow);
-            Toast.makeText(this, "Show value: " + progress, Toast.LENGTH_SHORT).show();
 
-        }
-
-        progress_bar.setProgress(progress);
-        text_view_progress.setText(String.valueOf(progress));
-//        progress_bar.setProgress(progress);
-//        text_view_progress.setText(progress);
-    }
     //Move Animation Float Button
     private void Move(){
         FrameLayout.LayoutParams paramsBreakfast = (FrameLayout.LayoutParams) fab_breakfast.getLayoutParams();

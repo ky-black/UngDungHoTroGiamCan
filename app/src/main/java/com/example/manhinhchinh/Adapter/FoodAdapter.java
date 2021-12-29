@@ -33,8 +33,6 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
     private List<FoodModule> mListFood;
     private List<FoodModule> mListFoodOld;
 
-    int ketQua = 0;
-    int dem = 0;
 
     public FoodAdapter(Context bConText, List<FoodModule> mListFood) {
         this.bConText = bConText;
@@ -58,13 +56,8 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         Picasso.with(bConText).load(food.getPicture()).into(holder.imgFood);
         holder.tvName.setText(food.getFoodName());
         holder.tvCalo.setText(food.getCalories());
-        //ban goc
-//        holder.layout_item_food.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onClickGoToDetail(food);
-//            }
-//        });
+//        holder.tv_food_des.setText(food.getDescription());
+//        holder.tv_food_unit.setText(food.getUnit());
         holder.layout_food_and_calo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,25 +75,13 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
             @Override
             public void onClick(View v) {
                 MainActivity.food.add(food);
-                dem++;
                 Intent intent = new Intent(bConText, MainActivity.class);
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("pass_calo_food", String.valueOf(ketQua));
-                bundle1.putString("pass_calo_food", String.valueOf(dem));
-                intent.putExtras(bundle1);
                 bConText.startActivity(intent);
 
-//                onClickPassFood(food);
             }
         });
     }
 
-    public static void processCar(ArrayList<FoodModule> foods){
-        int totalAmount=0;
-        for (int i=0; i<foods.size(); i++){
-            totalAmount = Integer.parseInt(foods.get(i).getCalories());
-        }
-    }
 
     private void onClickGoToDetail(FoodModule food) {
         Intent intent = new Intent(bConText, DetailActivity.class);
@@ -134,7 +115,7 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         private LinearLayout layout_food_and_calo;
         private CircleImageView imgFood;
         private TextView tvName;
-        private TextView tvCalo;
+        private TextView tvCalo, tv_food_des, tv_food_unit;
         private Button btnAnSang;
 
         public UserViewHolder(@NonNull View itemView) {
@@ -144,6 +125,8 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
             imgFood = itemView.findViewById(R.id.img_food);
             tvName = itemView.findViewById(R.id.tv_name);
             tvCalo = itemView.findViewById(R.id.tv_calo);
+            tv_food_des = itemView.findViewById(R.id.tv_food_des);
+            tv_food_unit = itemView.findViewById(R.id.tv_food_unit);
             btnAnSang = itemView.findViewById(R.id.btnAnSang);
         }
     }

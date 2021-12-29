@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/layout_item_food"
+    android:id="@+id/layout_item_exercise"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="58dp"
@@ -8,14 +8,14 @@
     android:layout_margin="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_food"
+        android:id="@+id/img_exercise"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/com_suon"
         android:layout_centerVertical="true"/>
 
     <LinearLayout
-        android:id="@+id/layout_food_and_calo"
+        android:id="@+id/layout_exercise_and_calo"
         android:layout_gravity="center"
         android:layout_width="0dp"
         android:layout_weight="7"
@@ -26,7 +26,7 @@
         android:layout_centerVertical="true">
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_name_exercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sà Bì Chưởng"
@@ -35,17 +35,17 @@
             android:textColor="@color/black"/>
 
         <TextView
-            android:id="@+id/tv_calo"
+            android:id="@+id/tv_calo_exercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700"
+            android:text="70"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="calo"
-            android:layout_marginTop="-20dp"
-            android:layout_marginStart="28dp"
+            android:layout_marginTop="-19dp"
+            android:layout_marginStart="18dp"
             />
 
     </LinearLayout>
@@ -57,7 +57,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnAnSang"
+            android:id="@+id/btnExercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
