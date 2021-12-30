@@ -6,24 +6,21 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.manhinhchinh.Adapter.ExerciseAdapter;
 import com.example.manhinhchinh.Adapter.FoodAdapter;
+import com.example.manhinhchinh.Module.ExerciseModule;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
 import com.example.manhinhchinh.ultil.MySingleton;
@@ -36,60 +33,52 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BreakFast extends AppCompatActivity {
+public class Exercise extends AppCompatActivity {
 
-    private RecyclerView rcv_food;
-    private FoodAdapter foodAdapter;
-    private SearchView searchView;
-    private Button btnAnSang;
-    public static List<FoodModule> foodModules = new ArrayList<>();
-    private String keyFood;
-
+    private RecyclerView rcv_exercise;
+    private ExerciseAdapter exerciseAdapter;
+    private SearchView searchViewEx;
+    private Button btnExercise;
+    public static List<ExerciseModule> exerciseModules = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_break_fast);
+        setContentView(R.layout.activity_exercise);
 
-        Intent intent = getIntent();
-        keyFood = intent.getExtras().getString("type_food");
-
-        rcv_food = findViewById(R.id.rcv_food);
+        rcv_exercise = findViewById(R.id.rcv_exercise);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rcv_food.setLayoutManager(linearLayoutManager);
+        rcv_exercise.setLayoutManager(linearLayoutManager);
 
-        btnAnSang = findViewById(R.id.btnAnSang);
+        btnExercise = findViewById(R.id.btnExercise);
 
-        getFoodData();
+        getExerciseData();
 
-        foodAdapter = new FoodAdapter(this, foodModules);
-        rcv_food.setAdapter(foodAdapter);
+        exerciseAdapter = new ExerciseAdapter(this, exerciseModules);
+        rcv_exercise.setAdapter(exerciseAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rcv_food.addItemDecoration(itemDecoration);
+        rcv_exercise.addItemDecoration(itemDecoration);
+
     }
 
-    private void getFoodData() {
+    private void getExerciseData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest request = new JsonArrayRequest(Server.urlGetFood, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Server.urlGetExercise, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 //                Toast.makeText(getApplicationContext(),""+response,Toast.LENGTH_LONG).show();
                 if (response != null){
                     for (int i = 0; i<response.length(); i++){
                         try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            if(jsonObject.getString("TypeFood").toLowerCase().indexOf(keyFood.toLowerCase()) != -1){
-                                FoodModule tmp = new FoodModule(jsonObject.getString("Description"),
-                                        jsonObject.getString("Picture"),
-                                        jsonObject.getString("ID"),
-                                        jsonObject.getString("Unit"),
-                                        jsonObject.getString("TypeFood"),
-                                        jsonObject.getString("Calories"),
-                                        jsonObject.getString("FoodName"));
-                                foodModules.add(tmp);
-                                foodAdapter.notifyDataSetChanged();
-                            }
-
+                            JSONObject jsonObjectEx = response.getJSONObject(i);
+                            ExerciseModule tmpEx = new ExerciseModule(jsonObjectEx.getString("Description"),
+                                        jsonObjectEx.getString("Picture"),
+                                        jsonObjectEx.getString("ID"),
+                                        jsonObjectEx.getString("Unit"),
+                                        jsonObjectEx.getString("Calories"),
+                                        jsonObjectEx.getString("ExerciseName"));
+                                exerciseModules.add(tmpEx);
+                                exerciseAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -106,39 +95,28 @@ public class BreakFast extends AppCompatActivity {
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
-
-    //chức năng tìm kiếm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchViewEx = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchViewEx.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchViewEx.setMaxWidth(Integer.MAX_VALUE);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchViewEx.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                foodAdapter.getFilter().filter(query);
+                exerciseAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                foodAdapter.getFilter().filter(newText);
+                exerciseAdapter.getFilter().filter(newText);
                 return false;
             }
         });
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (!searchView.isIconified()){
-            searchView.setIconified(true);
-            return;
-        }
-        super.onBackPressed();
     }
 }
