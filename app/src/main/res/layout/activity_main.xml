@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Activity.MainActivity">
-
-    <LinearLayout
-        android:id="@+id/header_title"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="#0099ff"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".Activity.MainActivity">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hôm nay"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:id="@+id/header_title"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="#0099ff"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hôm nay"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
 
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_gravity="center_horizontal"
-            android:indeterminateOnly="false"
-            android:progressDrawable="@drawable/circle"
-            android:progress="60"
-            android:max="2000"
-            android:layout_marginTop="-10dp"/>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateOnly="false"
+                android:progressDrawable="@drawable/circle"
+                android:progress="60"
+                android:max="2000"
+                android:layout_marginTop="-10dp"/>
 
-        <TextView
-            android:id="@+id/text_view_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="2000/2065calo"
-            android:hint="0"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_gravity="center"
-            android:layout_marginTop="-130dp" />
+            <TextView
+                android:id="@+id/text_view_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2000/2065calo"
+                android:hint="0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_gravity="center"
+                android:layout_marginTop="-130dp" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-        <TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Breakfast, lunch, dinner"
@@ -58,34 +58,38 @@
         android:background="#62B666"
         />
 
-        <Button
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SWAP"
-            android:layout_gravity="start"
-            android:layout_marginTop="245dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_main_food"
-        android:layout_marginTop="310dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            android:layout_marginTop="300dp">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_baseline_add_24"
-        />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_main_food"
+                android:layout_marginTop="310dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/float_layout"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_baseline_add_24"
+            />
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/float_layout"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="center" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

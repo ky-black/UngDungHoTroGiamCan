@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,17 +31,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     FloatingActionButton add_btn, fab_breakfast, fab_lunch, fab_dinner, fab_train;
     Animation Move_Breakfast, Move_Lunch, Move_Dinner, Move_Train,
             Back_Breakfast, Back_Lunch, Back_Dinner, Back_Train;
     boolean moveBack = false;
 
-    Button button_decr, button_incr, btnAnSang;
     ProgressBar progress_bar;
     TextView text_view_progress;
 
-
+    private SwipeRefreshLayout refreshLayout;
 
     public static List<FoodModule> food = new ArrayList<FoodModule>();
     public static List<ExerciseModule> exerciseModules = new ArrayList<ExerciseModule>();
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         progress_bar = findViewById(R.id.progress_bar);
         text_view_progress = findViewById(R.id.text_view_progress);
+        refreshLayout = findViewById(R.id.refreshLayout);
 
         //Main RecyclerView
         RecyclerView rcv_main_food = findViewById(R.id.rcv_main_food);
@@ -85,11 +87,8 @@ public class MainActivity extends AppCompatActivity {
         putCaloFromList();
 
 
-
-
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_main_food.addItemDecoration(itemDecoration);
-
 
 
         //Float Button
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //Button Sáng
         fab_breakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //Button Trưa
         fab_lunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,17 +125,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //Button Chiều
         fab_dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Trưa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Chiều", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, BreakFast.class);
                 intent.putExtra("type_food", "Bữa tối");
                 startActivity(intent);
             }
         });
-
+        //Button Tập Luyện
         fab_train.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +145,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //SwipeRefresh
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                putCaloFromList();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                    }
+                }, 500);
+            }
+        });
     }
 
     public void putCaloFromList() {
@@ -155,17 +168,6 @@ public class MainActivity extends AppCompatActivity {
         }
         progress_bar.setProgress(sumCalo);
         text_view_progress.setText(sumCalo + "/2000kcal");
-    }
-
-
-
-
-
-    private int sumCalo(){
-        int sum = 0;
-        for(int i = 0; i < food.size(); i++)
-            sum += parseInt(food.get(i).getCalories());
-        return sum;
     }
 
 
@@ -214,7 +216,5 @@ public class MainActivity extends AppCompatActivity {
         fab_train.setLayoutParams(paramsTrain);
         fab_train.startAnimation(Back_Train);
     }
-
-
 
 }

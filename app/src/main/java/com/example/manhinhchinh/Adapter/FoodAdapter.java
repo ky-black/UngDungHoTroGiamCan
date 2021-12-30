@@ -56,8 +56,6 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         Picasso.with(bConText).load(food.getPicture()).into(holder.imgFood);
         holder.tvName.setText(food.getFoodName());
         holder.tvCalo.setText(food.getCalories());
-//        holder.tv_food_des.setText(food.getDescription());
-//        holder.tv_food_unit.setText(food.getUnit());
         holder.layout_food_and_calo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
