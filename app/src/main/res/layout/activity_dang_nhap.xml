@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
 
     <Button
-        android:id="@+id/btnGiamCanTheoTapTheDucVaAnUon"
+        android:id="@+id/btnGiamCanTrong3Thang"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -113,7 +113,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGiamCanTheoTapTheDucVaAnUon" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGiamCanTrong3Thang" />
 
     <TextView
         android:id="@+id/textView3"

@@ -56,10 +56,11 @@
         app:layout_constraintTop_toBottomOf="@+id/topText" />
 
     <Button
-        android:id="@+id/btnGiamCanTheoTapTheDucVaAnUon"
+        android:id="@+id/btnGiamCanTrong3Thang"
         android:layout_width="159dp"
         android:layout_height="94dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="220dp"
         android:background="@drawable/round_bg"
         android:text="Giảm cân Trong 3 Tháng"
@@ -68,13 +69,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="312dp" />
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <Button
-        android:id="@+id/btnLGiamCanTheoAnUon"
+        android:id="@+id/btnGiamCanTrong6Thang"
         android:layout_width="153dp"
         android:layout_height="96dp"
         android:layout_marginStart="220dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/round_bg"
         android:text="Giảm cân Trong 6 Tháng"
@@ -83,13 +85,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="310dp" />
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <Button
         android:id="@+id/btnGiamCanTrong9Thang"
         android:layout_width="159dp"
         android:layout_height="94dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="220dp"
         android:background="@drawable/round_bg"
         android:text="Giảm cân Trong 9 Tháng"
@@ -98,13 +101,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="457dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGiamCanTrong3Thang" />
 
     <Button
-        android:id="@+id/btnLGiamCanTrong12Thang"
+        android:id="@+id/btnGiamCanTrong12Thang"
         android:layout_width="153dp"
         android:layout_height="96dp"
         android:layout_marginStart="220dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/round_bg"
         android:text="Giảm cân Trong 12 Tháng"
@@ -113,6 +117,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="455dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGiamCanTrong6Thang" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
