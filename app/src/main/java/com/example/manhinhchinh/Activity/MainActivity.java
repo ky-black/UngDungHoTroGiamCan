@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity{
 
     public static List<FoodModule> food = new ArrayList<FoodModule>();
     public static List<ExerciseModule> exerciseModules = new ArrayList<ExerciseModule>();
-    //chọn 1 trong 2
-//    FoodMainAdapter foodMainAdapter = null;
+
+    public static int IDTK = 1;
     FoodAdapter foodMainAdapter = null;
 
     @Override
