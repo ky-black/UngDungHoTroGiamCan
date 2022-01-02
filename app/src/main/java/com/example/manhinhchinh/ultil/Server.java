@@ -6,4 +6,5 @@ public class Server {
     public static String urlGetExercise = "http://"+IPaddress+":3000/exercise";
     public static String urlPostFood = "http://"+IPaddress+":3000/food_details";
     public static String urlGetFoodByID = "http://"+IPaddress+":3000/food_details/";
+    public static String urlGetFoodDetailsByIDTK = "http://"+IPaddress+":3000/getFoodDetails/";
 }

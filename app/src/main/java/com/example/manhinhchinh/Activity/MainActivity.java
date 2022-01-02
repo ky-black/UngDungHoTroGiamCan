@@ -36,6 +36,7 @@ import com.example.manhinhchinh.Adapter.ExerciseAdapter;
 import com.example.manhinhchinh.Adapter.FoodAdapter;
 import com.example.manhinhchinh.Adapter.FoodMainAdapter;
 import com.example.manhinhchinh.Module.ExerciseModule;
+import com.example.manhinhchinh.Module.FoodDetailsModule;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
 import com.example.manhinhchinh.ultil.MySingleton;
@@ -47,7 +48,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
@@ -67,6 +71,8 @@ public class MainActivity extends AppCompatActivity{
     public static int IDTK = 1;
     FoodMainAdapter foodMainAdapter;
 
+    public static ArrayList<FoodDetailsModule> arrayListDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +82,62 @@ public class MainActivity extends AppCompatActivity{
         //Ánh Xạ
         mapping();
         //updateProgressBar();
-        putCaloFromList();
 
         //Float Button
         catchOnEventFloatingActionButton();
         // Lấy dữ liệu món ăn của người dùng đã chọn trong ngày
+        getFoodData(new CallBackFoodDetails() {
+            @Override
+            public void onResponse(ArrayList<FoodDetailsModule> list) {
+                arrayListDetail = list;
+                foodMainAdapter.notifyDataSetChanged();
+            }
+        });
         getFoodDetail();
+        putCaloFromList();
+
+
 
 
     }
+    public interface CallBackFoodDetails{
+        void onResponse(ArrayList<FoodDetailsModule> list);
+    }
+    private void getFoodData(CallBackFoodDetails callBackFoodDetails) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest request = new JsonArrayRequest(Server.urlGetFoodDetailsByIDTK + IDTK, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                Toast.makeText(getApplicationContext(),""+response,Toast.LENGTH_LONG).show();
+                if (response != null){
+                    for (int i = 0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            FoodDetailsModule tmp = new FoodDetailsModule(jsonObject.getString("IDTK"),
+                                    jsonObject.getString("Quantily"),
+                                    jsonObject.getString("IDTA"),
+                                    jsonObject.getString("ID"),
+                                    jsonObject.getString("Date"));
+                            arrayListDetail.add(tmp);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    callBackFoodDetails.onResponse(arrayListDetail);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Loi gi "+error,Toast.LENGTH_LONG).show();
+            }
+        });
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+
+
 
 
     private void getFoodDetail() {
@@ -196,6 +249,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void mapping() {
+        arrayListDetail = new ArrayList<>();
+
         add_btn = findViewById(R.id.add_btn);
         fab_breakfast = findViewById(R.id.fab_breakfast);
         fab_lunch = findViewById(R.id.fab_lunch);
@@ -222,11 +277,13 @@ public class MainActivity extends AppCompatActivity{
         rcv_main_food.setLayoutManager(linearLayoutManager);
 
 
-        foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food);
+        foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food, String.valueOf(IDTK),arrayListDetail);
         rcv_main_food.setAdapter(foodMainAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcv_main_food.addItemDecoration(itemDecoration);
+
+
     }
 
     public void putCaloFromList() {
@@ -282,6 +339,7 @@ public class MainActivity extends AppCompatActivity{
         paramsTrain.bottomMargin -= (int) (fab_train.getWidth() * 4.8);
         fab_train.setLayoutParams(paramsTrain);
         fab_train.startAnimation(Back_Train);
+
     }
 
 }
