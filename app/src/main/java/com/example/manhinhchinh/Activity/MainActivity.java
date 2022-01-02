@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,14 +21,32 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.manhinhchinh.Adapter.ExerciseAdapter;
 import com.example.manhinhchinh.Adapter.FoodAdapter;
 import com.example.manhinhchinh.Adapter.FoodMainAdapter;
 import com.example.manhinhchinh.Module.ExerciseModule;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
+import com.example.manhinhchinh.ultil.MySingleton;
+import com.example.manhinhchinh.ultil.Server;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,52 +65,67 @@ public class MainActivity extends AppCompatActivity{
     public static List<ExerciseModule> exerciseModules = new ArrayList<ExerciseModule>();
 
     public static int IDTK = 1;
-    FoodAdapter foodMainAdapter = null;
+    FoodMainAdapter foodMainAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //Ánh Xạ
-        add_btn = findViewById(R.id.add_btn);
-        fab_breakfast = findViewById(R.id.fab_breakfast);
-        fab_lunch = findViewById(R.id.fab_lunch);
-        fab_dinner = findViewById(R.id.fab_dinner);
-        fab_train = findViewById(R.id.fab_train);
-
-        Move_Breakfast = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
-        Move_Lunch = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
-        Move_Dinner = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
-        Move_Train = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
-
-        Back_Breakfast = AnimationUtils.loadAnimation(this, R.anim.back_breakfast);
-        Back_Lunch = AnimationUtils.loadAnimation(this, R.anim.back_lunch);
-        Back_Dinner = AnimationUtils.loadAnimation(this, R.anim.back_dinner);
-        Back_Train = AnimationUtils.loadAnimation(this, R.anim.back_train);
-
-        progress_bar = findViewById(R.id.progress_bar);
-        text_view_progress = findViewById(R.id.text_view_progress);
-        refreshLayout = findViewById(R.id.refreshLayout);
-
-        //Main RecyclerView
-        RecyclerView rcv_main_food = findViewById(R.id.rcv_main_food);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rcv_main_food.setLayoutManager(linearLayoutManager);
-
-
-        FoodMainAdapter foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food);
-        rcv_main_food.setAdapter(foodMainAdapter);
+        mapping();
         //updateProgressBar();
-
         putCaloFromList();
 
-
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rcv_main_food.addItemDecoration(itemDecoration);
-
-
         //Float Button
+        catchOnEventFloatingActionButton();
+        // Lấy dữ liệu món ăn của người dùng đã chọn trong ngày
+        getFoodDetail();
+
+
+    }
+
+
+    private void getFoodDetail() {
+        String url = Server.urlGetFoodByID + IDTK;
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            if (response != null && response.length() > 2) {
+                food.clear();
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        FoodModule tmp = new FoodModule(
+                                jsonObject.getString("Description"),
+                                jsonObject.getString("Picture"),
+                                jsonObject.getString("ID"),
+                                jsonObject.getString("Unit"),
+                                jsonObject.getString("TypeFood"),
+                                jsonObject.getString("Calories"),
+                                jsonObject.getString("FoodName"));
+                        food.add(tmp);
+                        foodMainAdapter.notifyDataSetChanged();
+                    }
+//                    Log.i("response", response.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error", error.toString());
+            }
+        });
+        requestQueue.add(request);
+    }
+
+    private void catchOnEventFloatingActionButton() {
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +195,40 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    private void mapping() {
+        add_btn = findViewById(R.id.add_btn);
+        fab_breakfast = findViewById(R.id.fab_breakfast);
+        fab_lunch = findViewById(R.id.fab_lunch);
+        fab_dinner = findViewById(R.id.fab_dinner);
+        fab_train = findViewById(R.id.fab_train);
+
+        Move_Breakfast = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
+        Move_Lunch = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
+        Move_Dinner = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
+        Move_Train = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
+
+        Back_Breakfast = AnimationUtils.loadAnimation(this, R.anim.back_breakfast);
+        Back_Lunch = AnimationUtils.loadAnimation(this, R.anim.back_lunch);
+        Back_Dinner = AnimationUtils.loadAnimation(this, R.anim.back_dinner);
+        Back_Train = AnimationUtils.loadAnimation(this, R.anim.back_train);
+
+        progress_bar = findViewById(R.id.progress_bar);
+        text_view_progress = findViewById(R.id.text_view_progress);
+        refreshLayout = findViewById(R.id.refreshLayout);
+
+        //Main RecyclerView
+        RecyclerView rcv_main_food = findViewById(R.id.rcv_main_food);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rcv_main_food.setLayoutManager(linearLayoutManager);
+
+
+        foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food);
+        rcv_main_food.setAdapter(foodMainAdapter);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        rcv_main_food.addItemDecoration(itemDecoration);
+    }
+
     public void putCaloFromList() {
         int sumCalo = 0;
         for (int i=0; i< food.size(); i++){
@@ -169,7 +237,6 @@ public class MainActivity extends AppCompatActivity{
         progress_bar.setProgress(sumCalo);
         text_view_progress.setText(sumCalo + "/2000kcal");
     }
-
 
     //Move Animation Float Button
     private void Move(){

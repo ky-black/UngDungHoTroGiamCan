@@ -2,6 +2,7 @@ package com.example.manhinhchinh.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.manhinhchinh.Activity.MainActivity;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
+import com.example.manhinhchinh.ultil.Server;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -55,10 +67,27 @@ public class FoodMainAdapter extends RecyclerView.Adapter<FoodMainAdapter.FoodMa
         holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deleteFoodDetail(mListMainFood.get(holder.getAdapterPosition()).getID());
                 mListMainFood.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
             }
         });
+    }
+
+    private void deleteFoodDetail(String ID) {
+        String url = Server.urlGetFoodByID + ID;
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        StringRequest request = new StringRequest(Request.Method.DELETE,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error", error.toString());
+            }
+        });
+        requestQueue.add(request);
     }
 
 

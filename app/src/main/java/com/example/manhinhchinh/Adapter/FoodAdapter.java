@@ -91,7 +91,6 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         holder.btnAnSang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.food.add(food);
                 postDataToSever(food);
                 Intent intent = new Intent(bConText, MainActivity.class);
                 bConText.startActivity(intent);
