@@ -164,15 +164,7 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         intent.putExtras(bundle);
         bConText.startActivity(intent);
     }
-    public void onClickPassFood(FoodModule food) {
 
-        Intent intent1 = new Intent(bConText,MainActivity.class);
-        Bundle bundle1 = new Bundle();
-//        bundle1.putString("pass_name_food", food.getName());
-        bundle1.putString("pass_calo_food", food.getCalories());
-        intent1.putExtras(bundle1);
-        bConText.startActivity(intent1);
-    }
 
 
     @Override

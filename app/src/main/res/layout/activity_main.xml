@@ -11,7 +11,7 @@
             android:id="@+id/header_title"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="#0099ff"
+            android:background="@drawable/main_interface"
             android:orientation="vertical">
 
             <TextView
@@ -21,6 +21,8 @@
                 android:text="Hôm nay"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/back"
                 android:layout_marginLeft="10dp"/>
 
 
@@ -41,21 +43,25 @@
                 android:layout_height="wrap_content"
                 tools:text="2000/2065calo"
                 android:hint="0"
+                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:layout_gravity="center"
-                android:layout_marginTop="-130dp" />
+                android:layout_marginTop="-130dp"
+                android:textStyle="bold"
+                android:background="@color/black" />
 
         </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Breakfast, lunch, dinner"
+        android:text="Sáng, Trưa, Tối"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textAlignment="center"
         android:layout_marginTop="254dp"
-        android:background="#62B666"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
         />
 
 
