@@ -49,5 +49,4 @@ public class HienThiSoDuCanNangNguoiDungActivity extends AppCompatActivity {
             }
         });
     }
-
 }

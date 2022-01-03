@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ManHinhChinh"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.DangKyAppActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.DangNhapAppActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ThoiGianActivity"
             android:exported="false" />
         <activity

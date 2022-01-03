@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topText" />
 
     <Button
-        android:id="@+id/btnGiamCanTrong3Thang"
+        android:id="@+id/btnDangKy"
         android:layout_width="159dp"
         android:layout_height="94dp"
         android:layout_marginStart="32dp"
@@ -101,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGiamCanTrong3Thang" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDangKy" />
 
     <Button
         android:id="@+id/btnGiamCanTrong12Thang"

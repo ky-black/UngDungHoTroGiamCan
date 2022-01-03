@@ -17,7 +17,7 @@ public class ThoiGianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thoi_gian);
 
-        btnGiamCanTrong3Thang = findViewById(R.id.btnGiamCanTrong3Thang);
+        btnGiamCanTrong3Thang = findViewById(R.id.btnDangKy);
         btnGiamCanTrong6Thang = findViewById(R.id.btnGiamCanTrong6Thang);
         btnGiamCanTrong9Thang = findViewById(R.id.btnGiamCanTrong9Thang);
         btnGiamCanTrong12Thang = findViewById(R.id.btnGiamCanTrong12Thang);
@@ -51,7 +51,5 @@ public class ThoiGianActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
 }
