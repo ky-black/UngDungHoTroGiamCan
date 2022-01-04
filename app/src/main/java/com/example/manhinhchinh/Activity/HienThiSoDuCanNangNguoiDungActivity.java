@@ -39,7 +39,6 @@ public class HienThiSoDuCanNangNguoiDungActivity extends AppCompatActivity {
         } catch (Exception e) {
             s="nhap du lieu sai nha be";
         }
-        edtSoCanThua.setText(s);
 
         btnTiepTuc.setOnClickListener(new View.OnClickListener() {
             @Override
