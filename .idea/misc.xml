@@ -6,7 +6,9 @@
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_break_fast.xml" value="0.1" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_chon_thoi_gian.xml" value="0.33" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_dang_ky.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_dang_ky_app.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_dang_nhap.xml" value="0.33" />
+        <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_dang_nhap_app.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_detail_exercise1.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_hien_thi_so_du_can_nang.xml" value="0.33" />
@@ -18,6 +20,8 @@
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_thoi_gian.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_thoi_gian_giam_can.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/activity_thong_tin_ca_nhan.xml" value="0.33" />
+        <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/float_layout.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/item_exercire.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/item_food.xml" value="0.1" />
         <entry key="..\:/Users/Huu Ky/Desktop/HOC_TAP/UngDungHoTroGiamCan111/app/src/main/res/layout/item_main_breakfast.xml" value="0.1" />
         <entry key="..\:/Users/Huyyyy/AndroidStudioProjects/ManHinhChinh/app/src/main/res/drawable/circle.xml" value="0.176" />
@@ -32,12 +36,8 @@
         <entry key="..\:/Users/Huyyyy/AndroidStudioProjects/ManHinhChinh/app/src/main/res/layout/item_main_breakfast.xml" value="0.264" />
         <entry key="..\:/Users/Huyyyy/AndroidStudioProjects/ManHinhChinh/app/src/main/res/layout/main_breakfast.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/Huyyyy/AndroidStudioProjects/ManHinhChinh/app/src/main/res/menu/main_menu.xml" value="0.144" />
-        <entry key="..\:/Users/Toan/StudioProjects/UngDungHoTroGiamCan/app/src/main/res/layout/activity_dang_ky_app.xml" value="0.25" />
-        <entry key="..\:/Users/Toan/StudioProjects/UngDungHoTroGiamCan/app/src/main/res/layout/activity_dang_nhap_app.xml" value="0.3625" />
-        <entry key="..\:/Users/Toan/StudioProjects/UngDungHoTroGiamCan/app/src/main/res/layout/activity_hien_thi_so_du_can_nang_nguoi_dung.xml" value="0.3625" />
-        <entry key="..\:/Users/Toan/StudioProjects/UngDungHoTroGiamCan/app/src/main/res/layout/activity_nhap_thong_tin_nguoi_dung.xml" value="0.3625" />
-        <entry key="..\:/Users/Toan/StudioProjects/UngDungHoTroGiamCan/app/src/main/res/layout/activity_phuong_phap.xml" value="0.3625" />
-        <entry key="..\:/Users/Toan/StudioProjects/UngDungHoTroGiamCan/app/src/main/res/layout/activity_thoi_gian.xml" value="0.3625" />
+        <entry key="..\:/Users/Huyyyy/AndroidStudioProjects/UngDungHoTroGiamCanFullMain/app/src/main/res/layout/activity_hien_thi_so_du_can_nang_nguoi_dung.xml" value="0.11018518518518519" />
+        <entry key="..\:/Users/Huyyyy/AndroidStudioProjects/UngDungHoTroGiamCanFullMain/app/src/main/res/layout/activity_main.xml" value="0.264" />
       </map>
     </option>
   </component>
