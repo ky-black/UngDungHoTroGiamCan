@@ -90,7 +90,7 @@
 
         <TextView
 
-            android:text="Giới Tính: "
+            android:text="Gmail: "
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/white"
@@ -100,7 +100,7 @@
             android:paddingLeft="6dp"
             />
         <EditText
-            android:id="@+id/edtGioiTinh"
+            android:id="@+id/edtGmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

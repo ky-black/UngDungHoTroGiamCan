@@ -7,7 +7,7 @@
     tools:context=".Activity.MainActivity">
 
     <EditText
-        android:id="@+id/inputPassword2"
+        android:id="@+id/et_Re_enterPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/et_UserName" />
 
     <View
         android:id="@+id/topView"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="@+id/topView" />
 
     <EditText
-        android:id="@+id/inputEmail"
+        android:id="@+id/et_UserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -80,7 +80,7 @@
         android:drawableStart="@drawable/ic_baseline_email"
         android:drawablePadding="16dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="Email/Tên đăng nhập"
         android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <EditText
-        android:id="@+id/inputPassword"
+        android:id="@+id/et_Password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -105,10 +105,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/et_UserName" />
 
     <Button
-        android:id="@+id/btnDangKy"
+        android:id="@+id/btn_3Thang"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -121,6 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/et_Password" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,26 +56,26 @@
         app:layout_constraintTop_toBottomOf="@+id/topText" />
 
     <Button
-        android:id="@+id/btnDangKy"
+        android:id="@+id/btn_3Thang"
         android:layout_width="159dp"
         android:layout_height="94dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="220dp"
+
         android:background="@drawable/round_bg"
         android:text="Giảm cân Trong 3 Tháng"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_6Thang"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="30sp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <Button
-        android:id="@+id/btnGiamCanTrong6Thang"
+        android:id="@+id/btn_6Thang"
         android:layout_width="153dp"
         android:layout_height="96dp"
-        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/round_bg"
@@ -84,30 +84,30 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_3Thang"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <Button
-        android:id="@+id/btnGiamCanTrong9Thang"
+        android:id="@+id/btn_9Thang"
         android:layout_width="159dp"
         android:layout_height="94dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="220dp"
+
         android:background="@drawable/round_bg"
         android:text="Giảm cân Trong 9 Tháng"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_12Thang"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="30sp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDangKy" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_3Thang" />
 
     <Button
-        android:id="@+id/btnGiamCanTrong12Thang"
+        android:id="@+id/btn_12Thang"
         android:layout_width="153dp"
         android:layout_height="96dp"
-        android:layout_marginStart="220dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/round_bg"
@@ -116,7 +116,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGiamCanTrong6Thang" />
+        app:layout_constraintStart_toEndOf="@+id/btn_9Thang"
+        app:layout_constraintTop_toBottomOf="@+id/btn_6Thang" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
