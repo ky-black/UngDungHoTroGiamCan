@@ -146,7 +146,7 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("ID", null);
-            jsonBody.put("IDTK", MainActivity.IDTK);
+            jsonBody.put("IDTK", MainActivity.account.getID());
             jsonBody.put("IDTA", food.getID());
             jsonBody.put("Quantily", 1);
             jsonBody.put("Date", date);

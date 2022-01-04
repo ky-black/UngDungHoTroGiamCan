@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.manhinhchinh.Adapter.ExerciseAdapter;
 import com.example.manhinhchinh.Adapter.FoodAdapter;
 import com.example.manhinhchinh.Adapter.FoodMainAdapter;
+import com.example.manhinhchinh.Module.AccountModule;
 import com.example.manhinhchinh.Module.ExerciseModule;
 import com.example.manhinhchinh.Module.FoodDetailsModule;
 import com.example.manhinhchinh.Module.FoodModule;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity{
     public static List<FoodModule> food = new ArrayList<FoodModule>();
     public static List<ExerciseModule> exerciseModules = new ArrayList<ExerciseModule>();
 
-    public static int IDTK = 1;
+    public static AccountModule account;
     FoodMainAdapter foodMainAdapter;
 
     public static ArrayList<FoodDetailsModule> arrayListDetail;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        getAccount();
         //Ánh Xạ
         mapping();
         //updateProgressBar();
@@ -98,14 +99,92 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-
     }
+
+    private void getAccount() {
+        account = (AccountModule) getIntent().getSerializableExtra("object_account");
+        getIDTK(new CallBackAccount() {
+            @Override
+            public void onResponse(AccountModule ac) {
+                account.setID(ac.getID());
+            }
+        });
+    }
+
+    public interface CallBackAccount{
+        void onResponse(AccountModule account);
+    }
+    private void getIDTK(CallBackAccount callBackAccount) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        // Cast to json
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            jsonBody.put("UserName",account.getUserName());
+            jsonBody.put("Password",account.getPassword());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String requestBody = jsonBody.toString();
+        Toast.makeText(getApplicationContext(), jsonBody.toString(), Toast.LENGTH_LONG).show();
+
+
+        //Create req
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.urlCheckUser, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+//                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+//                Log.i("VOLLEY", response);
+                try {
+                    JSONArray jsonArrayAccount = new JSONArray(response);
+                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObjectAccount = jsonArray.getJSONObject(0);
+                    AccountModule tmp = new AccountModule(jsonObjectAccount.getString("ID"),
+                            jsonObjectAccount.getString("UserName"),
+                            jsonObjectAccount.getString("Password"),
+                            jsonObjectAccount.getString("Gmail"),
+                            jsonObjectAccount.getString("Age"),
+                            jsonObjectAccount.getString("Height"),
+                            jsonObjectAccount.getString("Weight"),
+                            jsonObjectAccount.getString("WeightLoss"),
+                            jsonObjectAccount.getString("WeightLossTime"));
+                    callBackAccount.onResponse(tmp);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY", error.toString());
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
     public interface CallBackFoodDetails{
         void onResponse(ArrayList<FoodDetailsModule> list);
     }
     private void getFoodData(CallBackFoodDetails callBackFoodDetails) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest request = new JsonArrayRequest(Server.urlGetFoodDetailsByIDTK + IDTK, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Server.urlGetFoodDetailsByIDTK + account.getID(), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -130,7 +209,6 @@ public class MainActivity extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),"Loi gi "+error,Toast.LENGTH_LONG).show();
             }
         });
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
@@ -141,7 +219,7 @@ public class MainActivity extends AppCompatActivity{
 
 
     private void getFoodDetail() {
-        String url = Server.urlGetFoodByID + IDTK;
+        String url = Server.urlGetFoodByID + account.getID();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.GET,url, new Response.Listener<String>() {
             @Override
@@ -277,7 +355,7 @@ public class MainActivity extends AppCompatActivity{
         rcv_main_food.setLayoutManager(linearLayoutManager);
 
 
-        foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food, String.valueOf(IDTK),arrayListDetail);
+        foodMainAdapter = new FoodMainAdapter(getApplicationContext(), food, String.valueOf(account.getID()),arrayListDetail);
         rcv_main_food.setAdapter(foodMainAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);

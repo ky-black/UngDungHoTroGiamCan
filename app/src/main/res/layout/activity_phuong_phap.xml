@@ -56,35 +56,32 @@
         app:layout_constraintTop_toBottomOf="@+id/topText" />
 
     <Button
-        android:id="@+id/btnDangKy"
+        android:id="@+id/btn_3Thang"
         android:layout_width="164dp"
         android:layout_height="161dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="220dp"
         android:background="@drawable/round_bg"
         android:text="Giảm cân theo tập thể dục và ăn uốn"
+        app:layout_constraintEnd_toStartOf="@id/btn_6Thang"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <Button
-        android:id="@+id/btnGiamCanTrong6Thang"
+        android:id="@+id/btn_6Thang"
         android:layout_width="163dp"
         android:layout_height="164dp"
-        android:layout_marginStart="220dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="36dp"
         android:background="@drawable/round_bg"
         android:text="Giảm cân theo ăn uốn"
         android:textSize="16sp"
         android:textStyle="bold"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_3Thang"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
