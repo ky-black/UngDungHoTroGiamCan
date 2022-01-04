@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.manhinhchinh.Adapter.FoodAdapter;
+import com.example.manhinhchinh.Module.AccountModule;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
 import com.example.manhinhchinh.ultil.MySingleton;
@@ -48,11 +49,14 @@ public class BreakFast extends AppCompatActivity {
     private Button btnAnSang;
     public static List<FoodModule> foodModules = new ArrayList<>();
     private String keyFood;
+    public AccountModule account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_break_fast);
+
+        account = (AccountModule) getIntent().getSerializableExtra("object_account");
 
         Intent intent = getIntent();
         keyFood = intent.getExtras().getString("type_food");
@@ -65,7 +69,7 @@ public class BreakFast extends AppCompatActivity {
 
         getFoodData();
 
-        foodAdapter = new FoodAdapter(this, foodModules);
+        foodAdapter = new FoodAdapter(this, foodModules, account);
         rcv_food.setAdapter(foodAdapter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);

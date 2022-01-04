@@ -11,29 +11,24 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.manhinhchinh.Adapter.ExerciseAdapter;
-import com.example.manhinhchinh.Adapter.FoodAdapter;
 import com.example.manhinhchinh.Adapter.FoodMainAdapter;
 import com.example.manhinhchinh.Module.AccountModule;
 import com.example.manhinhchinh.Module.ExerciseModule;
@@ -49,10 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
@@ -62,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
     boolean moveBack = false;
 
     ProgressBar progress_bar;
-    TextView text_view_progress;
+    TextView text_view_progress, text_view_progress_calo;
 
     private SwipeRefreshLayout refreshLayout;
 
@@ -83,7 +75,9 @@ public class MainActivity extends AppCompatActivity{
         //Ánh Xạ
         mapping();
         //updateProgressBar();
-
+        getCaloOneDay();
+        int Calories = (int) getCaloOneDay();
+        progress_bar.setMax(Calories);
         //Float Button
         catchOnEventFloatingActionButton();
         // Lấy dữ liệu món ăn của người dùng đã chọn trong ngày
@@ -101,12 +95,21 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    private long getCaloOneDay() {
+        int age = Integer.parseInt(account.getAge());
+        int height = Integer.parseInt(account.getHeight());
+        int weight = Integer.parseInt(account.getWeight());
+
+        double Calories = (13.397 * weight) + (4.799 * height) - (5.677 * age) + 88.362;
+        return Math.round(Calories);
+    }
+
     private void getAccount() {
         account = (AccountModule) getIntent().getSerializableExtra("object_account");
         getIDTK(new CallBackAccount() {
             @Override
             public void onResponse(AccountModule ac) {
-                account.setID(ac.getID());
+                account = ac;
             }
         });
     }
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity{
             e.printStackTrace();
         }
         final String requestBody = jsonBody.toString();
-        Toast.makeText(getApplicationContext(), jsonBody.toString(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), jsonBody.toString(), Toast.LENGTH_LONG).show();
 
 
         //Create req
@@ -179,6 +182,7 @@ public class MainActivity extends AppCompatActivity{
         requestQueue.add(stringRequest);
     }
 
+    //Đợi Request trả về dự liệu thì mới kết thúc hàm
     public interface CallBackFoodDetails{
         void onResponse(ArrayList<FoodDetailsModule> list);
     }
@@ -277,6 +281,7 @@ public class MainActivity extends AppCompatActivity{
                 Toast.makeText(MainActivity.this, "Sáng", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, BreakFast.class);
                 intent.putExtra("type_food", "Bữa sáng");
+                intent.putExtra("object_account", account);
                 startActivity(intent);
             }
         });
@@ -287,6 +292,7 @@ public class MainActivity extends AppCompatActivity{
                 Toast.makeText(MainActivity.this, "Trưa", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, BreakFast.class);
                 intent.putExtra("type_food", "Bữa trưa");
+                intent.putExtra("object_account", account);
                 startActivity(intent);
             }
         });
@@ -297,6 +303,7 @@ public class MainActivity extends AppCompatActivity{
                 Toast.makeText(MainActivity.this, "Chiều", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, BreakFast.class);
                 intent.putExtra("type_food", "Bữa tối");
+                intent.putExtra("object_account", account);
                 startActivity(intent);
             }
         });
@@ -306,6 +313,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Tập Luyện", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, Exercise.class);
+                intent.putExtra("object_account", account);
                 startActivity(intent);
             }
         });
@@ -370,7 +378,7 @@ public class MainActivity extends AppCompatActivity{
             sumCalo += Integer.parseInt(food.get(i).getCalories());
         }
         progress_bar.setProgress(sumCalo);
-        text_view_progress.setText(sumCalo + "/2000kcal");
+        text_view_progress.setText(""+sumCalo + "/"+ getCaloOneDay());
     }
 
     //Move Animation Float Button

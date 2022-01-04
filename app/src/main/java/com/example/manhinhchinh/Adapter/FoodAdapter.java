@@ -1,5 +1,6 @@
 package com.example.manhinhchinh.Adapter;
 
+import android.accounts.Account;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.manhinhchinh.Activity.BreakFast;
 import com.example.manhinhchinh.Activity.MainActivity;
 import com.example.manhinhchinh.Activity.DetailActivity;
+import com.example.manhinhchinh.Module.AccountModule;
 import com.example.manhinhchinh.Module.FoodModule;
 import com.example.manhinhchinh.R;
 import com.example.manhinhchinh.ultil.Server;
@@ -51,12 +53,14 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
     private Context bConText;
     private List<FoodModule> mListFood;
     private List<FoodModule> mListFoodOld;
+    private AccountModule account;
 
 
-    public FoodAdapter(Context bConText, List<FoodModule> mListFood) {
+    public FoodAdapter(Context bConText, List<FoodModule> mListFood, AccountModule account) {
         this.bConText = bConText;
         this.mListFood = mListFood;
         this.mListFoodOld = mListFood;
+        this.account = account;
     }
 
     @NonNull
@@ -93,8 +97,8 @@ public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.UserViewHolde
             public void onClick(View v) {
                 postDataToSever(food);
                 Intent intent = new Intent(bConText, MainActivity.class);
+                intent.putExtra("object_account", account);
                 bConText.startActivity(intent);
-
             }
         });
     }
