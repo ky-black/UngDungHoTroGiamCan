@@ -11,6 +11,8 @@ public class MySingleton {
     private RequestQueue requestQueue;
     private static Context ctx;
 
+
+    //Request phải trả về thì mới cho thêm Request mới
     private MySingleton(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();

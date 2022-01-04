@@ -90,7 +90,7 @@ public class DangNhapAppActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         final String requestBody = jsonBody.toString();
-        Toast.makeText(getApplicationContext(), jsonBody.toString(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), jsonBody.toString(), Toast.LENGTH_LONG).show();
 
 
         //Create req
