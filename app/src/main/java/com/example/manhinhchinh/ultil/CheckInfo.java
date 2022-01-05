@@ -19,4 +19,8 @@ public class CheckInfo {
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+    public static boolean checkPassword(String s){
+        String pattern = "(?=.*[a-z])(?=\\S+$).{6,}";
+        return s.matches(pattern);
+    }
 }

@@ -37,7 +37,13 @@ public class DangKyAppActivity extends AppCompatActivity {
         boolean tmp = true;
 
         if (!et_Password.getText().toString().trim().equals(et_Re_enterPassword.getText().toString().trim())){
-            et_Re_enterPassword.setError("Mật khẩu không khớm");
+            et_Re_enterPassword.setError("Mật khẩu không khớp");
+            et_Re_enterPassword.setText("");
+            tmp = false;
+        }
+        if (!CheckInfo.checkPassword(et_Password.getText().toString())){
+            et_Password.setError("Mật khẩu không hợp lệ!");
+            et_Password.setText("");
             tmp = false;
         }
         return tmp;
@@ -52,7 +58,7 @@ public class DangKyAppActivity extends AppCompatActivity {
                     public void onResponse(Boolean status) {
 
                         if (!status)
-                            Toast.makeText(getApplicationContext(),"Tên đăng nhập đã tồn tại",Toast.LENGTH_SHORT ).show();
+                            et_UserName.setError("Tên đăng đăng nhập đã tồn tại!");
 
                         if (status && checkInformation()){
                             Intent intent = new Intent(DangKyAppActivity.this, NhapThongTinNguoiDungActivity.class);

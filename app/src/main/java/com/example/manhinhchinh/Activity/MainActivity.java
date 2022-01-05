@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getAccount();
         //Ánh Xạ
         mapping();
@@ -88,8 +87,15 @@ public class MainActivity extends AppCompatActivity{
                 foodMainAdapter.notifyDataSetChanged();
             }
         });
-        getFoodDetail();
-        putCaloFromList();
+        getFoodDetail(new CallBackFood() {
+            @Override
+            public void onResponse(List<FoodModule> list) {
+                food = list;
+                putCaloFromList();
+            }
+        });
+
+
 
 
 
@@ -101,7 +107,7 @@ public class MainActivity extends AppCompatActivity{
         int weight = Integer.parseInt(account.getWeight());
 
         double Calories = (13.397 * weight) + (4.799 * height) - (5.677 * age) + 88.362;
-        return Math.round(Calories);
+        return Math.round(Calories) + 1361;
     }
 
     private void getAccount() {
@@ -131,7 +137,6 @@ public class MainActivity extends AppCompatActivity{
         }
         final String requestBody = jsonBody.toString();
 //        Toast.makeText(getApplicationContext(), jsonBody.toString(), Toast.LENGTH_LONG).show();
-
 
         //Create req
 
@@ -219,10 +224,12 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    public interface CallBackFood{
+        void onResponse(List<FoodModule> list);
+    }
 
 
-
-    private void getFoodDetail() {
+    private void getFoodDetail(CallBackFood callBackFood) {
         String url = Server.urlGetFoodByID + account.getID();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.GET,url, new Response.Listener<String>() {
@@ -245,6 +252,7 @@ public class MainActivity extends AppCompatActivity{
                         food.add(tmp);
                         foodMainAdapter.notifyDataSetChanged();
                     }
+                    callBackFood.onResponse(food);
 //                    Log.i("response", response.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();

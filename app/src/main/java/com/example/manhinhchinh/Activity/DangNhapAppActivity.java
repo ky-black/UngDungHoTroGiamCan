@@ -100,8 +100,8 @@ public class DangNhapAppActivity extends AppCompatActivity {
             public void onResponse(String response) {
 //                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 //                Log.i("VOLLEY", response);
-                try {
-                    JSONArray jsonArrayAccount = new JSONArray(response);
+                if (response.length() > 2){
+                    try {
                         JSONArray jsonArray = new JSONArray(response);
                         JSONObject jsonObjectAccount = jsonArray.getJSONObject(0);
                         AccountModule tmp = new AccountModule(jsonObjectAccount.getString("ID"),
@@ -114,8 +114,14 @@ public class DangNhapAppActivity extends AppCompatActivity {
                                 jsonObjectAccount.getString("WeightLoss"),
                                 jsonObjectAccount.getString("WeightLossTime"));
                         callBackAccount.onResponse(tmp);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    et_UserName.setError("Tài khoản hoặc mật khẩu không chính xác!");
+                    et_Password.setError("Tài khoản hoặc mật khẩu không chính xác!");
+                    et_UserName.setText("");
+                    et_Password.setText("");
                 }
             }
         }, new Response.ErrorListener() {
